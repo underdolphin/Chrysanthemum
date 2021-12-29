@@ -54,8 +54,8 @@ assignment_operator:
 
 unary_expression:
 	primary_expression
-	| '+' unary_expression
-	| '-' unary_expression
+	| PLUS unary_expression
+	| MINUS unary_expression
 	| OP_INC unary_expression
 	| OP_DEC unary_expression
 	| AMP unary_expression
@@ -105,7 +105,7 @@ conditional_and_expression:
 inclusive_or_expression:
 	exclusive_or_expression (BITWISE_OR exclusive_or_expression)*;
 
-exclusive_or_expression: and_expression ('^' and_expression)*;
+exclusive_or_expression: and_expression (CARET and_expression)*;
 
 and_expression: equility_expression (AMP equility_expression)*;
 
@@ -134,7 +134,7 @@ switch_expression:
 	)?;
 
 switch_expression_arms:
-	switch_expression_arm (',' switch_expression_arm)*;
+	switch_expression_arm (COMMA switch_expression_arm)*;
 
 switch_expression_arm: expression case_guard? RIGHT_ALLOW expression;
 
