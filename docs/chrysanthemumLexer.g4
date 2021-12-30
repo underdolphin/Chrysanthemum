@@ -1,7 +1,91 @@
 lexer grammar chrysanthemumLexer;
+// comments
+channels {
+	COMMENTS_CHANNEL
+}
+
+SINGLE_LINE_COMMENT:
+	'//' InputCharacter* -> channel(COMMENTS_CHANNEL);
+DELIMITED_COMMENT: '/*' .*? '*/' -> channel(COMMENTS_CHANNEL);
 
 /* identifier */
 IDENTIFIER: '@'? IdentifierOrKeyword;
+
+// literal
+INTEGER_LITERAL: [0-9] ('_'* [0-9])* IntegerTypeSuffix?;
+HEX_INTEGER_LITERAL:
+	'0' [xX] ('_'* HexDigit)+ IntegerTypeSuffix?;
+BIN_INTEGER_LITERAL: '0' [bB] ('_'* [01])+ IntegerTypeSuffix?;
+
+// keyword
+VAR: 'var';
+AWAIT: 'await';
+SWITCH: 'switch';
+WHEN: 'when';
+
+// types
+INT8: 'int8';
+INT16: 'int16';
+INT32: 'int32';
+INT64: 'int64';
+FLOAT32: 'float32';
+FLOAT64: 'float64';
+STRING: 'string';
+NUMBER: 'number'; // is float64 
+VOID: 'void';
+TRUE: 'true';
+FALSE: 'false';
+
+// Punctuators
+OPEN_BRACE: '{';
+CLOSE_BRACE: '}';
+OPEN_BRACKET: '[';
+CLOSE_BRACKET: ']';
+OPEN_PAREN: '(';
+CLOSE_PAREN: ')';
+DOT: '.';
+COMMA: ',';
+COLON: ';';
+LT: '<';
+GT: '>';
+RIGHT_ALLOW: '=>';
+AMP: '&';
+BITWISE_OR: '|';
+CARET: '^';
+
+// Operators 
+ASSIGNMENT: '=';
+PLUS: '+';
+MINUS: '-';
+STAR: '*';
+DIV: '/';
+PERCENT: '%';
+OP_INC: '++';
+OP_DEC: '--';
+OP_AND: '&&';
+OP_OR: '||';
+OP_EQ: '==';
+OP_NE: '!=';
+OP_LE: '<=';
+OP_GE: '>=';
+OP_ADD_ASSIGNMENT: '+=';
+OP_SUB_ASSIGNMENT: '-=';
+OP_MULT_ASSIGNMENT: '*=';
+OP_DIV_ASSIGNMENT: '/=';
+OP_MOD_ASSIGNMENT: '%=';
+OP_AND_ASSIGNMENT: '&=';
+OP_OR_ASSIGNMENT: '|=';
+OP_XOR_ASSIGNMENT: '^=';
+OP_LEFT_SHIFT: '<<';
+OP_LEFT_SHIFT_ASSIGNMENT: '<<=';
+OP_RIGHT_SHIFT: '>>';
+OP_RIGHT_SHIFT_ASSIGNMENT: '>>=';
+OP_RANGE: '..';
+
+// fragment
+fragment IntegerTypeSuffix: [lL]? [uU]| [uU]? [lL];
+fragment InputCharacter: ~[\r\n\u0085\u2028\u2029];
+
 fragment IdentifierOrKeyword:
 	IdentifierStartCharacter IdentifeirPartCharacter*;
 fragment IdentifierStartCharacter: LetterCharacter | '_';
@@ -699,66 +783,3 @@ fragment UnicodeClassND:
 	| '\uaa50' ..'\uaa59'
 	| '\uabf0' ..'\uabf9'
 	| '\uff10' ..'\uff19';
-
-/* keyword */
-VAR: 'var';
-AWAIT: 'await';
-SWITCH: 'switch';
-WHEN: 'when';
-
-/* types */
-INT8: 'int8';
-INT16: 'int16';
-INT32: 'int32';
-INT64: 'int64';
-FLOAT32: 'float32';
-FLOAT64: 'float64';
-STRING: 'string';
-NUMBER: 'number'; // is float64 
-VOID: 'void';
-
-/* Punctuators */
-OPEN_BRACE: '{';
-CLOSE_BRACE: '}';
-OPEN_BRACKET: '[';
-CLOSE_BRACKET: ']';
-OPEN_PAREN: '(';
-CLOSE_PAREN: ')';
-DOT: '.';
-COMMA: ',';
-COLON: ';';
-LT: '<';
-GT: '>';
-RIGHT_ALLOW: '=>';
-AMP: '&';
-BITWISE_OR: '|';
-CARET: '^';
-
-/* Operators */
-ASSIGNMENT: '=';
-PLUS: '+';
-MINUS: '-';
-STAR: '*';
-DIV: '/';
-PERCENT: '%';
-OP_INC: '++';
-OP_DEC: '--';
-OP_AND: '&&';
-OP_OR: '||';
-OP_EQ: '==';
-OP_NE: '!=';
-OP_LE: '<=';
-OP_GE: '>=';
-OP_ADD_ASSIGNMENT: '+=';
-OP_SUB_ASSIGNMENT: '-=';
-OP_MULT_ASSIGNMENT: '*=';
-OP_DIV_ASSIGNMENT: '/=';
-OP_MOD_ASSIGNMENT: '%=';
-OP_AND_ASSIGNMENT: '&=';
-OP_OR_ASSIGNMENT: '|=';
-OP_XOR_ASSIGNMENT: '^=';
-OP_LEFT_SHIFT: '<<';
-OP_LEFT_SHIFT_ASSIGNMENT: '<<=';
-OP_RIGHT_SHIFT: '>>';
-OP_RIGHT_SHIFT_ASSIGNMENT: '>>=';
-OP_RANGE: '..';

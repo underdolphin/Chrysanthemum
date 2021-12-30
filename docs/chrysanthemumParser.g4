@@ -63,10 +63,13 @@ unary_expression:
 	| AWAIT unary_expression
 	| cast_expression;
 
-cast_expression:
-	OPEN_PAREN type CLOSE_PAREN unary_expression;
+cast_expression: OPEN_PAREN type CLOSE_PAREN unary_expression;
 
-primary_expression: object_name | member_eval | array_access;
+primary_expression:
+	literal
+	| object_name
+	| member_eval
+	| array_access;
 
 function_expression:
 	function_signature RIGHT_ALLOW function_body;
@@ -91,8 +94,7 @@ block_content: object_definition | member_eval;
 
 member_eval: type member_eval_args?;
 
-member_eval_args:
-	OPEN_PAREN type (COMMA type)* CLOSE_PAREN;
+member_eval_args: OPEN_PAREN type (COMMA type)* CLOSE_PAREN;
 
 conditional_expression: conditional_or_expression;
 
@@ -136,10 +138,15 @@ switch_expression:
 switch_expression_arms:
 	switch_expression_arm (COMMA switch_expression_arm)*;
 
-switch_expression_arm: expression case_guard? RIGHT_ALLOW expression;
+switch_expression_arm:
+	expression case_guard? RIGHT_ALLOW expression;
 
 case_guard: WHEN expression;
 
 range_expression:
 	unary_expression
 	| unary_expression? OP_RANGE unary_expression?;
+
+literal: boolean_literal | INTEGER_LITERAL | HEX_INTEGER_LITERAL | BIN_INTEGER_LITERAL;
+
+boolean_literal: TRUE | FALSE;
