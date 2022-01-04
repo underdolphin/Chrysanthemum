@@ -1,7 +1,20 @@
-using System.Data;
+// Copyright 2022 underdolphin
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 using Irony.Parsing;
 
-namespace Compiler.Lib.Parse
+namespace Compiler.Lib.ParseOld
 {
   [Language("Chrysanthemum")]
   public class ChrysanthemumGrammar : Grammar
@@ -20,50 +33,50 @@ namespace Compiler.Lib.Parse
       NonGrammarTerminals.Add(DelimitedComment);
 
       // Punctuators
-      var OPEN_BRACE = ToTerm("{", "OPEN_BRACE");
-      var CLOSE_BRACE = ToTerm("}", "CLOSE_BRACE");
-      var OPEN_BRACKET = ToTerm("[", "OPEN_BRACKET");
-      var CLOSE_BRACKET = ToTerm("]", "CLOSE_BRACKET");
-      var OPEN_PAREN = ToTerm("(", "OPEN_PAREN");
-      var CLOSE_PAREN = ToTerm(")", "CLOSE_PAREN");
-      var DOT = ToTerm(".", "DOT");
-      var COMMA = ToTerm(",", "COMMA");
-      var COLON = ToTerm(";", "COLON");
-      var LT = ToTerm("<", "LT");
-      var GT = ToTerm(">", "GT");
-      var RIGHT_ALLOW = ToTerm("=>", "RIGHT_ALLOW");
-      var AMP = ToTerm("&", "AMP");
-      var BITWISE_OR = ToTerm("|", "BITWISE_OR");
-      var CARET = ToTerm("^", "CARET");
+      var open_brace = ToTerm("{", "open_brace");
+      var close_brace = ToTerm("}", "close_brace");
+      var open_bracket = ToTerm("[", "open_bracket");
+      var close_bracket = ToTerm("]", "close_bracket");
+      var open_paren = ToTerm("(", "open_paren");
+      var close_paren = ToTerm(")", "close_paren");
+      var dot = ToTerm(".", "dot");
+      var comma = ToTerm(",", "comma");
+      var colon = ToTerm(";", "colon");
+      var lt = ToTerm("<", "lt");
+      var gt = ToTerm(">", "gt");
+      var right_allow = ToTerm("=>", "right_allow");
+      var amp = ToTerm("&", "amp");
+      var bitwise_or = ToTerm("|", "bitwise_or");
+      var caret = ToTerm("^", "caret");
 
       // Operators 
-      var ASSIGNMENT = ToTerm("=", "ASSIGNMENT");
-      var PLUS = ToTerm("+", "PLUS");
-      var MINUS = ToTerm("-", "MINUS");
-      var STAR = ToTerm("*", "STAR");
-      var DIV = ToTerm("/", "DIV");
-      var PERCENT = ToTerm("%", "PERCENT");
-      var OP_INC = ToTerm("++", "OP_INC");
-      var OP_DEC = ToTerm("--", "OP_DEC");
-      var OP_AND = ToTerm("&&", "OP_AND");
-      var OP_OR = ToTerm("||", "OP_OR");
-      var OP_EQ = ToTerm("==", "OP_EQ");
-      var OP_NE = ToTerm("!=", "OP_NE");
-      var OP_LE = ToTerm("<=", "OP_LE");
-      var OP_GE = ToTerm(">=", "OP_GE");
-      var OP_ADD_ASSIGNMENT = ToTerm("+=", "OP_ADD_ASSIGNMENT");
-      var OP_SUB_ASSIGNMENT = ToTerm("-=", "OP_SUB_ASSIGNMENT");
-      var OP_MULT_ASSIGNMENT = ToTerm("*=", "OP_MULT_ASSIGNMENT");
-      var OP_DIV_ASSIGNMENT = ToTerm("/=", "OP_DIV_ASSIGNMENT");
-      var OP_MOD_ASSIGNMENT = ToTerm("%=", "OP_MOD_ASSIGNMENT");
-      var OP_AND_ASSIGNMENT = ToTerm("&=", "OP_AND_ASSIGNMENT");
-      var OP_OR_ASSIGNMENT = ToTerm("|=", "OP_OR_ASSIGNMENT");
-      var OP_XOR_ASSIGNMENT = ToTerm("^=", "OP_XOR_ASSIGNMENT");
-      var OP_LEFT_SHIFT = ToTerm("<<", "OP_LEFT_SHIFT");
-      var OP_LEFT_SHIFT_ASSIGNMENT = ToTerm("<<=", "OP_LEFT_SHIFT_ASSIGNMENT");
-      var OP_RIGHT_SHIFT = ToTerm(">>", "OP_RIGHT_SHIFT");
-      var OP_RIGHT_SHIFT_ASSIGNMENT = ToTerm(">>=", "OP_RIGHT_SHIFT_ASSIGNMENT");
-      var OP_RANGE = ToTerm("..", "OP_RANGE");
+      var op_assignment = ToTerm("=", "op_assignment");
+      var op_plus = ToTerm("+", "op_plus");
+      var op_minus = ToTerm("-", "op_minus");
+      var op_star = ToTerm("*", "op_star");
+      var op_div = ToTerm("/", "op_div");
+      var op_percent = ToTerm("%", "op_percent");
+      var op_increment = ToTerm("++", "op_increment");
+      var op_decrement = ToTerm("--", "op_decrement");
+      var op_and = ToTerm("&&", "op_and");
+      var op_or = ToTerm("||", "op_or");
+      var op_eq = ToTerm("==", "op_eq");
+      var op_ne = ToTerm("!=", "op_ne");
+      var op_le = ToTerm("<=", "op_le");
+      var op_ge = ToTerm(">=", "op_ge");
+      var op_add_assignment = ToTerm("+=", "op_add_assignment");
+      var op_sub_assignment = ToTerm("-=", "op_sub_assignment");
+      var op_multi_assignment = ToTerm("*=", "op_multi_assignment");
+      var op_div_assignment = ToTerm("/=", "op_div_assignment");
+      var op_mod_assignment = ToTerm("%=", "op_mod_assignment");
+      var op_and_assignment = ToTerm("&=", "op_and_assignment");
+      var op_or_assignment = ToTerm("|=", "op_or_assignment");
+      var op_xor_assignment = ToTerm("^=", "op_xor_assignment");
+      var op_left_shift = ToTerm("<<", "op_left_shift");
+      var op_left_shift_assignment = ToTerm("<<=", "op_left_shift_assignment");
+      var op_right_shift = ToTerm(">>", "op_right_shift");
+      var op_right_shift_assignment = ToTerm(">>=", "op_right_shift_assignment");
+      var op_range = ToTerm("..", "op_range");
 
       // Compilation units
       var one_source = new NonTerminal("one_source");
@@ -77,7 +90,6 @@ namespace Compiler.Lib.Parse
       var object_name = new NonTerminal("object_name");
 
       // array
-      var array_access = new NonTerminal("array_access");
       var array_accessor_list = new NonTerminal("array_accessor_list");
       var array_accessor = new NonTerminal("array_accessor");
 
@@ -85,6 +97,8 @@ namespace Compiler.Lib.Parse
       var expression = new NonTerminal("expression");
       var assignment = new NonTerminal("assignment");
       var assignment_operator = new NonTerminal("assignment_operator");
+      var assignment_op_expression_opt = new NonTerminal("assignment_op_exppression?");
+      var assignment_op_expression = new NonTerminal("assignment_op_expression");
       var unary_expression = new NonTerminal("unary_expression");
       var cast_expression = new NonTerminal("cast_expression");
       var primary_expression = new NonTerminal("primary_expression");
@@ -95,143 +109,148 @@ namespace Compiler.Lib.Parse
       var function_body = new NonTerminal("function_body");
       var block = new NonTerminal("block");
       var block_content = new NonTerminal("block_content");
+      var block_content_list = new NonTerminal("block_content+");
       var member_eval = new NonTerminal("member_eval");
       var member_eval_args = new NonTerminal("member_eval_args");
-      var conditional_expression = new NonTerminal("conditional_expression");
-      var conditional_or_expression = new NonTerminal("conditional_or_expression");
-      var conditional_and_expression = new NonTerminal("conditional_and_expression");
-      var inclusive_or_expression = new NonTerminal("inclusive_or_expression");
-      var exclusive_or_expression = new NonTerminal("exclusive_or_expression");
-      var and_expression = new NonTerminal("and_expression");
-      var equility_expression = new NonTerminal("equility_expression");
-      var relational_expression = new NonTerminal("relational_expression");
-      var shift_expression = new NonTerminal("shift_expression");
-      var additive_expression = new NonTerminal("additive_expression");
-      var multiplicative_expression = new NonTerminal("multiplicative_expression");
+      // conditional
+      var binary_expression = new NonTerminal("binary_expression");
+      var binary_operators = new NonTerminal("binary_operators");
       var switch_expression = new NonTerminal("switch_expression");
       var switch_expression_arms = new NonTerminal("switch_expression_arms");
       var switch_expression_arm = new NonTerminal("switch_expression_arm");
       var case_guard = new NonTerminal("case_guard");
-      var range_expression = new NonTerminal("range_expression");
 
       // literals
       var literal = new NonTerminal("literal");
       var boolean_literal = new NonTerminal("boolean_literal");
 
+      // Operators
+      RegisterOperators(1, "=", "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "<<=", ">>=", "=>");
+      RegisterOperators(2, "||");
+      RegisterOperators(3, "&&");
+      RegisterOperators(4, "|");
+      RegisterOperators(5, "^");
+      RegisterOperators(6, "&");
+      RegisterOperators(7, "==", "!=");
+      RegisterOperators(8, "<", ">", "<=", ">=");
+      RegisterOperators(9, "<<", ">>");
+      RegisterOperators(10, "+", "-");
+      RegisterOperators(11, "*", "/", "%");
+      RegisterOperators(12, "..");
+
+      MarkTransient(literal, expression, primary_expression, binary_expression);
+      MarkPunctuation(".", ",", ";", "{", "}", "[", "]", "(", ")");
+      AddTermsReportGroup("typename", "int8", "int16", "int32", "float32", "float64", "number", "string");
+
       // Rules impl
       // Compilation units
       Root = one_source;
       one_source.Rule = block;
-      object_definition.Rule = "var" + type_annotation_opt + ASSIGNMENT + expression;
+      object_definition.Rule = "var" + type_annotation_opt + expression;
 
-      // Types
-      type_annotation.Rule = COLON + types;
+      // // Types
+      var types_or_object_name = new NonTerminal("types_or_object_name");
+      object_name.Rule = MakeStarRule(object_name, dot, identifier);
+      type_annotation.Rule = colon + types_or_object_name;
       type_annotation_opt.Rule = Empty | type_annotation;
-      types.Rule = embedded_type | object_name | "void";
+      types_or_object_name.Rule = types | object_name;
+      types.Rule = embedded_type | "void";
       embedded_type.Rule = ToTerm("int8") | "int16" | "int32" | "int64" | "float32" | "float64" | "number" | "string";
-      var dot_identifier = new NonTerminal("dot_identifier");
-      dot_identifier.Rule = DOT + identifier;
-      var dot_identifier_list = new NonTerminal("dot_identifier_list");
-      dot_identifier_list.Rule = MakeStarRule(dot_identifier_list, null, dot_identifier);
-      object_name.Rule = identifier + dot_identifier_list;
 
-      // array
-      array_access.Rule = object_name + array_accessor_list;
-      array_accessor_list.Rule = MakeStarRule(array_accessor_list, null, array_accessor);
-      array_accessor.Rule = OPEN_BRACKET + object_name + CLOSE_BRACKET;
-
-      // Expressions
-      expression.Rule = assignment | function_expression | conditional_expression;
-      assignment.Rule = unary_expression + assignment_operator + expression;
+      // // Expressions
+      expression.Rule = assignment | binary_expression | switch_expression | function_expression;
+      assignment.Rule = unary_expression + assignment_op_expression_opt;
+      assignment_op_expression_opt.Rule = Empty | assignment_op_expression;
+      assignment_op_expression.Rule = assignment_operator + expression;
       assignment_operator.Rule =
-      ASSIGNMENT
-      | OP_ADD_ASSIGNMENT
-      | OP_SUB_ASSIGNMENT
-      | OP_MULT_ASSIGNMENT
-      | OP_DIV_ASSIGNMENT
-      | OP_MOD_ASSIGNMENT
-      | OP_AND_ASSIGNMENT
-      | OP_OR_ASSIGNMENT
-      | OP_XOR_ASSIGNMENT
-      | OP_LEFT_SHIFT_ASSIGNMENT
-      | OP_RIGHT_SHIFT_ASSIGNMENT;
+        op_assignment
+        | op_add_assignment
+        | op_sub_assignment
+        | op_multi_assignment
+        | op_div_assignment
+        | op_mod_assignment
+        | op_and_assignment
+        | op_or_assignment
+        | op_xor_assignment
+        | op_left_shift_assignment
+        | op_right_shift_assignment;
       unary_expression.Rule =
-      primary_expression
-      | PLUS + unary_expression
-      | MINUS + unary_expression
-      | OP_INC + unary_expression
-      | OP_DEC + unary_expression
-      | AMP + unary_expression
-      | STAR + unary_expression
-      | "await" + unary_expression
-      | cast_expression;
-      cast_expression.Rule = OPEN_PAREN + types + CLOSE_PAREN + unary_expression;
+        primary_expression
+        | op_plus + unary_expression
+        | op_minus + unary_expression
+        | op_increment + unary_expression
+        | op_decrement + unary_expression
+        | amp + unary_expression
+        | op_star + unary_expression
+        | "await" + unary_expression
+        | "static" + unary_expression;
       primary_expression.Rule =
-      literal
-      | object_name
-      | member_eval
-      | array_access;
-      function_expression.Rule = function_signature + RIGHT_ALLOW + function_body;
-      function_signature.Rule =
-      OPEN_PAREN + CLOSE_PAREN
-      | OPEN_PAREN + function_parameter_list + CLOSE_PAREN
-      | identifier;
-      function_parameter_list.Rule = MakeStarRule(function_parameter_list, COMMA, function_parameter);
-      var types_opt = new NonTerminal("types?");
-      types_opt.Rule = Empty | types;
-      function_parameter.Rule = identifier + types_opt;
+        literal |
+        member_eval;
+
+      // // function
+      function_expression.Rule = function_signature + right_allow + function_body;
+      function_signature.Rule = open_paren + function_parameter_list + close_paren;
+      function_parameter_list.Rule = MakeStarRule(function_parameter_list, comma, function_parameter);
+      function_parameter.Rule = unary_expression + type_annotation_opt;
       function_body.Rule = block;
-      block.Rule =
-      OPEN_BRACE + CLOSE_BRACE
-      | OPEN_BRACE + block_content + CLOSE_BRACE;
-      block_content.Rule = object_definition | member_eval;
-      var member_eval_args_opt = new NonTerminal("member_eval_args?");
-      member_eval_args_opt.Rule = Empty | member_eval_args;
-      member_eval.Rule = types + member_eval_args_opt;
-      var types_comma_list = new NonTerminal("types_comma_list");
-      types_comma_list.Rule = MakeStarRule(types_comma_list, COMMA, types);
-      member_eval_args.Rule = OPEN_PAREN + types_comma_list + CLOSE_PAREN;
-      conditional_expression.Rule = conditional_or_expression;
-      conditional_or_expression.Rule = conditional_and_expression + MakeStarRule(conditional_or_expression, OP_OR, conditional_and_expression);
-      conditional_and_expression.Rule = inclusive_or_expression + MakeStarRule(conditional_and_expression, OP_AND, inclusive_or_expression);
-      inclusive_or_expression.Rule = exclusive_or_expression + MakeStarRule(inclusive_or_expression, BITWISE_OR, exclusive_or_expression);
-      exclusive_or_expression.Rule = and_expression + MakeStarRule(exclusive_or_expression, CARET, and_expression);
-      and_expression.Rule = equility_expression + MakeStarRule(and_expression, AMP, equility_expression);
-      var op_equilitys = new NonTerminal("op_equilitys");
-      op_equilitys.Rule = OP_EQ | OP_NE;
-      equility_expression.Rule = relational_expression + MakeStarRule(equility_expression, op_equilitys, relational_expression);
-      var op_relationals = new NonTerminal("op_relationals");
-      op_relationals.Rule = LT | GT | OP_LE | OP_GE;
-      relational_expression.Rule = shift_expression + MakeStarRule(relational_expression, op_relationals, shift_expression);
-      var op_shifts = new NonTerminal("op_shifts");
-      op_shifts.Rule = OP_LEFT_SHIFT | OP_RIGHT_SHIFT;
-      shift_expression.Rule = additive_expression + MakeStarRule(shift_expression, op_shifts, additive_expression);
-      var op_additive = new NonTerminal("op_additive");
-      op_additive.Rule = PLUS | MINUS;
-      additive_expression.Rule = multiplicative_expression + MakeStarRule(additive_expression, op_additive, multiplicative_expression);
-      var op_multiplicative = new NonTerminal("op_multiplicative");
-      op_multiplicative.Rule = STAR | DIV | PERCENT;
-      multiplicative_expression.Rule = switch_expression + MakeStarRule(multiplicative_expression, op_multiplicative, switch_expression);
+
+      // block
+      block.Rule = open_brace + block_content_list + close_brace;
+      block_content.Rule = object_definition | unary_expression;
+      block_content_list.Rule = MakeStarRule(block_content_list, block_content);
+
+      // // member_eval
+      var member_eval_select = new NonTerminal("member_eval_select");
+      var member_eval_select_opt = new NonTerminal("member_eval_select?");
+      member_eval_args.Rule = open_paren + expression + close_paren;
+      member_eval_select.Rule = member_eval_args | array_accessor_list;
+      member_eval_select_opt.Rule = Empty | member_eval_select;
+      member_eval.Rule = object_name + member_eval_select_opt;
+
+      // // array
+      array_accessor_list.Rule = MakePlusRule(array_accessor_list, null, array_accessor);
+      array_accessor.Rule = open_bracket + expression + close_bracket;
+
+      // conditional
+      binary_operators.Rule =
+        op_or |
+        op_and |
+        bitwise_or |
+        caret |
+        amp |
+        op_eq |
+        op_ne |
+        lt |
+        gt |
+        op_le |
+        op_ge |
+        op_left_shift |
+        op_right_shift |
+        op_plus |
+        op_minus |
+        op_star |
+        op_div |
+        op_percent;
+      binary_expression.Rule = MakeStarRule(binary_expression, binary_operators, expression);
+
+      // switch_expression
       var switch_expression_opt = new NonTerminal("switch_expression?");
       var switch_expression_body = new NonTerminal("switch_expression_body");
       var swith_expression_comma = new NonTerminal("swith_expression_comma");
       var swith_expression_comma_opt = new NonTerminal("swith_expression_comma?");
       var comma_opt = new NonTerminal("comma?");
-      switch_expression_body.Rule = "switch" + OPEN_BRACE + swith_expression_comma_opt + CLOSE_BRACE;
-      comma_opt.Rule = Empty | COMMA;
-      swith_expression_comma.Rule = switch_expression_arms + comma_opt;
-      swith_expression_comma_opt.Rule = Empty | swith_expression_comma;
-      switch_expression_opt.Rule = Empty | switch_expression_body;
-      switch_expression.Rule = range_expression + switch_expression_opt;
-      switch_expression_arms.Rule = switch_expression_arm + MakeStarRule(switch_expression_arms, COMMA, switch_expression_arm);
       var case_guard_opt = new NonTerminal("case_guard?");
+      switch_expression.Rule = unary_expression + switch_expression_body;
+      switch_expression_body.Rule = "switch" + open_brace + swith_expression_comma_opt + close_brace;
+      swith_expression_comma_opt.Rule = Empty | swith_expression_comma;
+      swith_expression_comma.Rule = switch_expression_arms + comma_opt;
+      comma_opt.Rule = Empty | comma;
+      switch_expression_arms.Rule = MakeStarRule(switch_expression_arms, comma, switch_expression_arm);
       case_guard_opt.Rule = Empty | case_guard;
-      switch_expression_arm.Rule = expression + case_guard_opt + RIGHT_ALLOW + expression;
+      switch_expression_arm.Rule = expression + case_guard_opt + right_allow + expression;
       case_guard.Rule = "when" + expression;
-      var unary_expression_opt = new NonTerminal("unary_expression?");
-      unary_expression_opt.Rule = Empty | unary_expression;
-      range_expression.Rule = unary_expression | unary_expression_opt + OP_RANGE + unary_expression_opt;
-      
+
       // literals
       literal.Rule = boolean_literal | Number | StringLiteral;
       boolean_literal.Rule = ToTerm("true") | "false";

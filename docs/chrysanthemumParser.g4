@@ -6,7 +6,7 @@ options {
 
 one_source: block;
 
-object_definition: VAR type_annotation? ASSIGNMENT expression;
+object_definition: VAR type_annotation? object_name ASSIGNMENT expression;
 
 type_annotation: COLON type;
 
@@ -92,9 +92,9 @@ block:
 
 block_content: object_definition | member_eval;
 
-member_eval: type member_eval_args?;
+member_eval: object_name member_eval_args?;
 
-member_eval_args: OPEN_PAREN type (COMMA type)* CLOSE_PAREN;
+member_eval_args: OPEN_PAREN (type (COMMA type)*)? CLOSE_PAREN;
 
 conditional_expression: conditional_or_expression;
 
