@@ -11,18 +11,18 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-using Xunit;
-using static Compiler.Lib.Parsers.Keywords;
 using Sprache;
 
-namespace Compiler.Tests;
-
-public class ParseTest
+namespace Compiler.Lib.Parsers
 {
-  [Fact]
-  public void VarTest()
+  public class LexerFragments
   {
-    Assert.Equal("var", varKeyword.Parse("var"));
+    public static readonly CommentParser Comment = new CommentParser();
+
+    /// <summary>
+    /// identifier
+    /// </summary>
+    public static readonly Parser<string> Identifier = Parse.Identifier(Parse.Letter, Parse.LetterOrDigit);
   }
 }
+
