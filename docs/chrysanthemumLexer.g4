@@ -18,7 +18,8 @@ HEX_INTEGER_LITERAL:
 BIN_INTEGER_LITERAL: '0' [bB] ('_'* [01])+ IntegerTypeSuffix?;
 
 // keyword
-VAR: 'var';
+CONST: 'const';
+LET: 'let';
 AWAIT: 'await';
 SWITCH: 'switch';
 WHEN: 'when';
@@ -45,7 +46,8 @@ OPEN_PAREN: '(';
 CLOSE_PAREN: ')';
 DOT: '.';
 COMMA: ',';
-COLON: ';';
+COLON: ':';
+SEMICOLON: ';';
 LT: '<';
 GT: '>';
 RIGHT_ALLOW: '=>';

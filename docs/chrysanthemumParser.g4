@@ -6,7 +6,9 @@ options {
 
 one_source: block;
 
-object_definition: VAR type_annotation? object_name ASSIGNMENT expression;
+object_definition: const_or_let type_annotation? object_name ASSIGNMENT expression;
+
+const_or_let: CONST | LET;
 
 type_annotation: COLON type;
 
