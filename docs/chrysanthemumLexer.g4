@@ -54,6 +54,7 @@ RIGHT_ALLOW: '=>';
 AMP: '&';
 BITWISE_OR: '|';
 CARET: '^';
+BANG: '!';
 
 // Operators 
 ASSIGNMENT: '=';
