@@ -1,31 +1,118 @@
-// Copyright 2022 underdolphin
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+using System.Collections.Generic;
+
+using Compiler.Lib.Lexer;
 
 using Xunit;
-using static Compiler.Lib.Parsers.LexerFragments;
-using Sprache;
-
 namespace Compiler.Tests.Parsers;
 
 public class LexerTest
 {
+  
   [Fact]
-  public void CommentTest()
+  public void TokensTest()
   {
-    Assert.Equal("test", Comment.SingleLineComment.Parse("//test"));
-    Assert.Equal("test", Comment.SingleLineComment.Parse("// test"));
-    Assert.Equal("test", Comment.MultiLineComment.Parse("/*test*/"));
-    Assert.Equal("test", Comment.MultiLineComment.Parse("/* test */"));
+    var input = "{}[]().,;:<>&|^=+-*/";
+
+    var testTokens = new List<Tokens>();
+    testTokens.Add(new Tokens(TokenKind.OPEN_BRACE, "{"));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_BRACE, "}"));
+    testTokens.Add(new Tokens(TokenKind.OPEN_BRACKET, "["));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_BRACKET, "]"));
+    testTokens.Add(new Tokens(TokenKind.OPEN_PAREN, "("));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_PAREN, ")"));
+    testTokens.Add(new Tokens(TokenKind.DOT, "."));
+    testTokens.Add(new Tokens(TokenKind.COMMA, ","));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+    testTokens.Add(new Tokens(TokenKind.LT, "<"));
+    testTokens.Add(new Tokens(TokenKind.GT, ">"));
+    testTokens.Add(new Tokens(TokenKind.AMP, "&"));
+    testTokens.Add(new Tokens(TokenKind.BITWISE_OR, "|"));
+    testTokens.Add(new Tokens(TokenKind.CARET, "^"));
+
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.PLUS, "+"));
+    testTokens.Add(new Tokens(TokenKind.MINUS, "-"));
+    testTokens.Add(new Tokens(TokenKind.STAR, "*"));
+    testTokens.Add(new Tokens(TokenKind.DIV, "/"));
+    testTokens.Add(new Tokens(TokenKind.EOF, ""));
+
+    var lexer = new TokenLexer(input);
+
+    foreach (var testToken in testTokens)
+    {
+      var token = lexer.NextToken();
+      Assert.Equal(testToken.TokenKind, token.TokenKind);
+      Assert.Equal(testToken.Literal, token.Literal);
+    }
+  }
+
+  [Fact]
+  public void TokensTest2()
+  {
+    var input = @"const a = 5;
+    const ten = 10;
+    
+    let add = (x, y) => 
+    { 
+      x + y;
+    };
+    
+    let result = add(a, ten);";
+
+    var testTokens = new List<Tokens>();
+    // const a = 5;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "a"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "5"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // const a = 5;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "ten"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "10"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // let add = (x, y) => 
+    // { 
+    //   x + y;
+    // };
+    testTokens.Add(new Tokens(TokenKind.LET, "let"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "add"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.OPEN_PAREN, "("));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "x"));
+    testTokens.Add(new Tokens(TokenKind.COMMA, ","));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "y"));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_PAREN, ")"));
+    testTokens.Add(new Tokens(TokenKind.RIGHT_ALLOW, "=>"));
+    testTokens.Add(new Tokens(TokenKind.OPEN_BRACE, "{"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "x"));
+    testTokens.Add(new Tokens(TokenKind.PLUS, "+"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "y"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_BRACE, "}"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // let result = add(a, ten);
+    testTokens.Add(new Tokens(TokenKind.LET ,"let"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "result"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "add"));
+    testTokens.Add(new Tokens(TokenKind.OPEN_PAREN, "("));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "a"));
+    testTokens.Add(new Tokens(TokenKind.COMMA, ","));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "ten"));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_PAREN, ")"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    testTokens.Add(new Tokens(TokenKind.EOF, ""));
+
+    var lexer = new TokenLexer(input);
+
+    foreach (var testToken in testTokens)
+    {
+      var token = lexer.NextToken();
+      Assert.Equal(testToken.TokenKind, token.TokenKind);
+      Assert.Equal(testToken.Literal, token.Literal);
+    }
   }
 }

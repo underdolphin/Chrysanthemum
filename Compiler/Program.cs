@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using static Compiler.Lib.Parsers.Keywords;
-using Sprache;
+using Compiler.Lib.Lexer;
 
 namespace Compiler
 {
@@ -21,7 +20,24 @@ namespace Compiler
   {
     public static void Main(string[] args)
     {
-      Console.WriteLine(varKeyword.Parse("var"));
+      var input = @"const a = 5;";
+
+      var testTokens = new List<Tokens>();
+      // const a = 5;
+      testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+      testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "a"));
+      testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+      testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "5"));
+      testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+
+      var lexer = new TokenLexer(input);
+
+      foreach (var testToken in testTokens)
+      {
+        var token = lexer.NextToken();
+        Console.WriteLine(token.TokenKind);
+        Console.WriteLine(token.Literal);
+      }
       return;
     }
   }

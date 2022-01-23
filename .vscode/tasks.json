@@ -37,6 +37,22 @@
         "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "dotnet",
+      "group": "test",
+      "args": [
+        "test",
+        "Compiler.Tests/Compiler.Tests.csproj"
+      ],
+      "presentation": {
+        "reveal": "silent",
+      },
+      "problemMatcher": [
+        "$msCompile"
+      ]
     }
   ]
 }

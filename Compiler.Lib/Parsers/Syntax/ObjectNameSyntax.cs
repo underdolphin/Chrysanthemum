@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Compiler.Tests.Parsers;
-
-public class ParseTest
+namespace Compiler.Lib.Parsers.Syntax
 {
+    public class ObjectNameSyntax {
+      public ObjectNameSyntax(IEnumerable<string> objectName) {
+        
+      }
+    }
 }

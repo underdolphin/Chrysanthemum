@@ -16,11 +16,20 @@ using System.Linq;
 using static Compiler.Lib.Parsers.OpAndPunctions;
 using static Compiler.Lib.Parsers.Keywords;
 using static Compiler.Lib.Parsers.LexerFragments;
+using Compiler.Lib.Parsers.Syntax;
 
 namespace Compiler.Lib.Parsers
 {
   public class Grammar
   {
+    /// <summary>
+    /// types: embedded_type | object_name | VOID;
+    /// </summary>
+    /// <returns></returns>
+    public static readonly Parser<string> Types =
+      EmbeddedType
+      .Or(voidKeyword);
+
     /// <summary>
     /// embedded_type:
     ///   INT8
