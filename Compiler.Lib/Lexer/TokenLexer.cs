@@ -87,16 +87,48 @@ namespace Compiler.Lib.Lexer
           token = new Tokens(TokenKind.COLON, this.CurrentChar.ToString());
           break;
         case '<':
-          token = new Tokens(TokenKind.LT, this.CurrentChar.ToString());
+          if (this.NextChar == '=')
+          {
+            token = new Tokens(TokenKind.OP_LE, "<=");
+            this.ReadChar();
+          }
+          else
+          {
+            token = new Tokens(TokenKind.LT, this.CurrentChar.ToString());
+          }
           break;
         case '>':
-          token = new Tokens(TokenKind.GT, this.CurrentChar.ToString());
+          if (this.NextChar == '=')
+          {
+            token = new Tokens(TokenKind.OP_GE, ">=");
+            this.ReadChar();
+          }
+          else
+          {
+            token = new Tokens(TokenKind.GT, this.CurrentChar.ToString());
+          }
           break;
         case '&':
-          token = new Tokens(TokenKind.AMP, this.CurrentChar.ToString());
+          if (this.NextChar == '&')
+          {
+            token = new Tokens(TokenKind.OP_AND, "&&");
+            this.ReadChar();
+          }
+          else
+          {
+            token = new Tokens(TokenKind.AMP, this.CurrentChar.ToString());
+          }
           break;
         case '|':
-          token = new Tokens(TokenKind.BITWISE_OR, this.CurrentChar.ToString());
+          if (this.NextChar == '|')
+          {
+            token = new Tokens(TokenKind.OP_OR, "||");
+            this.ReadChar();
+          }
+          else
+          {
+            token = new Tokens(TokenKind.BITWISE_OR, this.CurrentChar.ToString());
+          }
           break;
         case '^':
           token = new Tokens(TokenKind.CARET, this.CurrentChar.ToString());
@@ -107,22 +139,54 @@ namespace Compiler.Lib.Lexer
             token = new Tokens(TokenKind.RIGHT_ALLOW, "=>");
             this.ReadChar();
           }
+          else if (this.NextChar == '=')
+          {
+            token = new Tokens(TokenKind.OP_EQ, "==");
+            this.ReadChar();
+          }
           else
           {
             token = new Tokens(TokenKind.ASSIGNMENT, this.CurrentChar.ToString());
           }
           break;
         case '+':
-          token = new Tokens(TokenKind.PLUS, this.CurrentChar.ToString());
+          if (this.NextChar == '+')
+          {
+            token = new Tokens(TokenKind.OP_INC, "++");
+            this.ReadChar();
+          }
+          else
+          {
+            token = new Tokens(TokenKind.PLUS, this.CurrentChar.ToString());
+          }
           break;
         case '-':
-          token = new Tokens(TokenKind.MINUS, this.CurrentChar.ToString());
+          if (this.NextChar == '-')
+          {
+            token = new Tokens(TokenKind.OP_DEC, "--");
+            this.ReadChar();
+          }
+          else
+          {
+            token = new Tokens(TokenKind.MINUS, this.CurrentChar.ToString());
+          }
           break;
         case '*':
           token = new Tokens(TokenKind.STAR, this.CurrentChar.ToString());
           break;
         case '/':
           token = new Tokens(TokenKind.DIV, this.CurrentChar.ToString());
+          break;
+        case '!':
+          if (this.NextChar == '=')
+          {
+            token = new Tokens(TokenKind.OP_NE, "!=");
+            this.ReadChar();
+          }
+          else
+          {
+            token = new Tokens(TokenKind.BANG, this.CurrentChar.ToString());
+          }
           break;
         case (char)0:
           token = new Tokens(TokenKind.EOF, "");

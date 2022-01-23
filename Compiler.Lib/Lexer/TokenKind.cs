@@ -65,6 +65,7 @@ namespace Compiler.Lib.Lexer
     AMP,
     BITWISE_OR,
     CARET,
+    BANG,
 
     // Operators 
     ASSIGNMENT,
