@@ -53,7 +53,7 @@ namespace Compiler.Lib.Lexer
     public Tokens NextToken()
     {
       this.SkipWhitespace();
-      Tokens token = null;
+      Tokens token = new Tokens(TokenKind.ILLEGAL, this.CurrentChar.ToString());
       switch (this.CurrentChar)
       {
         case '{':
