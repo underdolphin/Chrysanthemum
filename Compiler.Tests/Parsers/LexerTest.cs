@@ -11,9 +11,10 @@ public class LexerTest
   [Fact]
   public void TokensTest()
   {
-    var input = "{}[]().,;:<>&|^=+-*/!";
+    var input = "={}[]().,;:<>&|^+-*/%!";
 
     var testTokens = new List<Tokens>();
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
     testTokens.Add(new Tokens(TokenKind.OPEN_BRACE, "{"));
     testTokens.Add(new Tokens(TokenKind.CLOSE_BRACE, "}"));
     testTokens.Add(new Tokens(TokenKind.OPEN_BRACKET, "["));
@@ -29,12 +30,11 @@ public class LexerTest
     testTokens.Add(new Tokens(TokenKind.AMP, "&"));
     testTokens.Add(new Tokens(TokenKind.BITWISE_OR, "|"));
     testTokens.Add(new Tokens(TokenKind.CARET, "^"));
-
-    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
     testTokens.Add(new Tokens(TokenKind.PLUS, "+"));
     testTokens.Add(new Tokens(TokenKind.MINUS, "-"));
     testTokens.Add(new Tokens(TokenKind.STAR, "*"));
     testTokens.Add(new Tokens(TokenKind.DIV, "/"));
+    testTokens.Add(new Tokens(TokenKind.PERCENT, "%"));
     testTokens.Add(new Tokens(TokenKind.BANG, "!"));
     testTokens.Add(new Tokens(TokenKind.EOF, ""));
 
@@ -160,6 +160,90 @@ public class LexerTest
     // 1 >= 0;
     testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
     testTokens.Add(new Tokens(TokenKind.OP_GE, ">="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    testTokens.Add(new Tokens(TokenKind.EOF, ""));
+
+    var lexer = new TokenLexer(input);
+
+    foreach (var testToken in testTokens)
+    {
+      var token = lexer.NextToken();
+      Assert.Equal(testToken.TokenKind, token.TokenKind);
+      Assert.Equal(testToken.Literal, token.Literal);
+    }
+  }
+
+  [Fact]
+  public void TokensTest4()
+  {
+    var input = "1 += 0;1 -= 0;1 *= 0;1 /= 0;1 %= 0;1 &= 0;1 |= 0;1 ^= 0;1 << 0;1 <<= 0;1 >> 0;1 >>= 0;1 .. 0;";
+
+    var testTokens = new List<Tokens>();
+
+    // 1 += 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_ADD_ASSIGNMENT, "+="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 -= 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_SUB_ASSIGNMENT, "-="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 *= 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_MULT_ASSIGNMENT, "*="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 /= 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_DIV_ASSIGNMENT, "/="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 %= 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_MOD_ASSIGNMENT, "%="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 &= 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_AND_ASSIGNMENT, "&="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 |= 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_OR_ASSIGNMENT, "|="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 ^= 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_XOR_ASSIGNMENT, "^="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 << 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_LEFT_SHIFT, "<<"));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 <<= 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_LEFT_SHIFT_ASSIGNMENT, "<<="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 >> 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_RIGHT_SHIFT, ">>"));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 >>= 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_RIGHT_SHIFT_ASSIGNMENT, ">>="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // 1 .. 0;
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "1"));
+    testTokens.Add(new Tokens(TokenKind.OP_RANGE, ".."));
     testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
     testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
     testTokens.Add(new Tokens(TokenKind.EOF, ""));
