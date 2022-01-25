@@ -32,8 +32,11 @@ namespace Compiler.Lib.Lexer
     CONST,
     LET,
     AWAIT,
+    ASYNC,
     SWITCH,
     WHEN,
+    PUBLIC,
+    PRIVATE,
 
     // types
     INT8,

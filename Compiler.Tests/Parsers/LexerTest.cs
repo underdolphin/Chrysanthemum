@@ -257,4 +257,76 @@ public class LexerTest
       Assert.Equal(testToken.Literal, token.Literal);
     }
   }
+
+  [Fact]
+  public void TokensTestModifier()
+  {
+    var input = @"private async const add = (x, y) => 
+                 {
+                   await HeavyProcess();
+                 };
+                 
+                 public async let add = (x, y) => 
+                 {
+                   await HeavyProcess();
+                 };";
+
+    var testTokens = new List<Tokens>();
+
+    // private async const add = (x, y) => 
+    // {
+    //    await HeavyProcess();
+    // };
+    testTokens.Add(new Tokens(TokenKind.PRIVATE, "private"));
+    testTokens.Add(new Tokens(TokenKind.ASYNC, "async"));
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "add"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.OPEN_PAREN, "("));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "x"));
+    testTokens.Add(new Tokens(TokenKind.COMMA, ","));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "y"));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_PAREN, ")"));
+    testTokens.Add(new Tokens(TokenKind.RIGHT_ALLOW, "=>"));
+    testTokens.Add(new Tokens(TokenKind.OPEN_BRACE, "{"));
+    testTokens.Add(new Tokens(TokenKind.AWAIT, "await"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "HeavyProcess"));
+    testTokens.Add(new Tokens(TokenKind.OPEN_PAREN, "("));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_PAREN, ")"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_BRACE, "}"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // public async let add = (x, y) => 
+    // {
+    //    await HeavyProcess();
+    // };
+    testTokens.Add(new Tokens(TokenKind.PUBLIC, "public"));
+    testTokens.Add(new Tokens(TokenKind.ASYNC, "async"));
+    testTokens.Add(new Tokens(TokenKind.LET, "let"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "add"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.OPEN_PAREN, "("));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "x"));
+    testTokens.Add(new Tokens(TokenKind.COMMA, ","));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "y"));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_PAREN, ")"));
+    testTokens.Add(new Tokens(TokenKind.RIGHT_ALLOW, "=>"));
+    testTokens.Add(new Tokens(TokenKind.OPEN_BRACE, "{"));
+    testTokens.Add(new Tokens(TokenKind.AWAIT, "await"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "HeavyProcess"));
+    testTokens.Add(new Tokens(TokenKind.OPEN_PAREN, "("));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_PAREN, ")"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    testTokens.Add(new Tokens(TokenKind.CLOSE_BRACE, "}"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+   
+    var lexer = new TokenLexer(input);
+
+    foreach (var testToken in testTokens)
+    {
+      var token = lexer.NextToken();
+      Assert.Equal(testToken.TokenKind, token.TokenKind);
+      Assert.Equal(testToken.Literal, token.Literal);
+    }
+  }
 }

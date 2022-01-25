@@ -40,8 +40,11 @@ namespace Compiler.Lib.Lexer
           {"const",TokenKind.CONST},
           {"let",TokenKind.LET},
           {"await",TokenKind.AWAIT},
+          {"async",TokenKind.ASYNC},
           {"switch",TokenKind.SWITCH},
-          {"when",TokenKind.WHEN}
+          {"when",TokenKind.WHEN},
+          {"public",TokenKind.PUBLIC},
+          {"private",TokenKind.PRIVATE},
       };
   }
 }
