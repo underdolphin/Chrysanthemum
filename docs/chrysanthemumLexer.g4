@@ -21,8 +21,11 @@ BIN_INTEGER_LITERAL: '0' [bB] ('_'* [01])+ IntegerTypeSuffix?;
 CONST: 'const';
 LET: 'let';
 AWAIT: 'await';
+ASYNC: 'async';
 SWITCH: 'switch';
 WHEN: 'when';
+PUBLIC : 'public';
+PRIVATE: 'private';
 
 // types
 INT8: 'int8';

@@ -6,7 +6,13 @@ options {
 
 one_source: block;
 
-object_definition: const_or_let type_annotation? object_name ASSIGNMENT expression;
+object_definition:
+	access_modifier_and_async_modifier const_or_let type_annotation? object_name ASSIGNMENT
+		expression SEMICOLON;
+
+access_modifier_and_async_modifier: access_modifier? ASYNC?;
+
+access_modifier: PUBLIC | PRIVATE;
 
 const_or_let: CONST | LET;
 
@@ -89,8 +95,8 @@ function_parameter: identifier type?;
 function_body: block;
 
 block:
-	OPEN_BRACE CLOSE_BRACE
-	| OPEN_BRACE block_content+ CLOSE_BRACE;
+	access_modifier_and_async_modifier OPEN_BRACE CLOSE_BRACE
+	| access_modifier_and_async_modifier OPEN_BRACE block_content+ CLOSE_BRACE;
 
 block_content: object_definition | member_eval;
 
@@ -149,6 +155,10 @@ range_expression:
 	unary_expression
 	| unary_expression? OP_RANGE unary_expression?;
 
-literal: boolean_literal | INTEGER_LITERAL | HEX_INTEGER_LITERAL | BIN_INTEGER_LITERAL;
+literal:
+	boolean_literal
+	| INTEGER_LITERAL
+	| HEX_INTEGER_LITERAL
+	| BIN_INTEGER_LITERAL;
 
 boolean_literal: TRUE | FALSE;
