@@ -319,6 +319,106 @@ public class LexerTest
     testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
     testTokens.Add(new Tokens(TokenKind.CLOSE_BRACE, "}"));
     testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    testTokens.Add(new Tokens(TokenKind.EOF, ""));
+   
+    var lexer = new TokenLexer(input);
+
+    foreach (var testToken in testTokens)
+    {
+      var token = lexer.NextToken();
+      Assert.Equal(testToken.TokenKind, token.TokenKind);
+      Assert.Equal(testToken.Literal, token.Literal);
+    }
+  }
+
+  [Fact]
+  public void TokensTestType()
+  {
+    var input = @"const:boolean value = true;
+                 const:boolean value = false;
+                 const:int8 value = 0;
+                 const:int16 value = 0;
+                 const:int32 value = 0;
+                 const:int64 value = 0;
+                 const:float32 value = 0;
+                 const:float64 value = 0;
+                 const:number value = 0;";
+
+    var testTokens = new List<Tokens>();
+
+    // const:boolean value = true;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+    testTokens.Add(new Tokens(TokenKind.BOOLEAN, "boolean"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "value"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.TRUE, "true"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // const:boolean value = false;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+    testTokens.Add(new Tokens(TokenKind.BOOLEAN, "boolean"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "value"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.FALSE, "false"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // const:int8 value = 0;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+    testTokens.Add(new Tokens(TokenKind.INT8, "int8"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "value"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // const:int16 value = 0;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+    testTokens.Add(new Tokens(TokenKind.INT16, "int16"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "value"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // const:int32 value = 0;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+    testTokens.Add(new Tokens(TokenKind.INT32, "int32"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "value"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // const:int64 value = 0;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+    testTokens.Add(new Tokens(TokenKind.INT64, "int64"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "value"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // const:float32 value = 0;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+    testTokens.Add(new Tokens(TokenKind.FLOAT32, "float32"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "value"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // const:float64 value = 0;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+    testTokens.Add(new Tokens(TokenKind.FLOAT64, "float64"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "value"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    // const:number value = 0;
+    testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+    testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+    testTokens.Add(new Tokens(TokenKind.NUMBER, "number"));
+    testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "value"));
+    testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
+    testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "0"));
+    testTokens.Add(new Tokens(TokenKind.SEMICOLON, ";"));
+    testTokens.Add(new Tokens(TokenKind.EOF, ""));
    
     var lexer = new TokenLexer(input);
 

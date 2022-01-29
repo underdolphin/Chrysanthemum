@@ -18,6 +18,7 @@ namespace Compiler.Lib.Lexer
   {
     public string Input { get; set; }
     public int Position { get; set; }
+    public char NextNextChar { get; set; }
     public char NextChar { get; set; }
     public char CurrentChar { get; set; }
 
@@ -45,6 +46,15 @@ namespace Compiler.Lib.Lexer
       else
       {
         this.NextChar = this.Input[this.Position + 1];
+      }
+
+      if (this.Position + 2 >= this.Input.Length)
+      {
+        this.NextChar = (char)0;
+      }
+      else
+      {
+        this.NextNextChar = this.Input[this.Position + 2];
       }
 
       Position += 1;
@@ -312,6 +322,46 @@ namespace Compiler.Lib.Lexer
         identifier += this.NextChar;
         this.ReadChar();
       }
+
+      if (identifier == "int" || identifier == "float")
+      {
+        // for int8
+        if (this.NextChar == '8')
+        {
+          identifier += this.NextChar;
+          this.ReadChar();
+        }
+        else if (this.NextChar == '1')
+        {
+          if (this.NextNextChar == '6')
+          {
+            identifier += this.NextChar;
+            this.ReadChar();
+            identifier += this.NextChar;
+            this.ReadChar();
+          }
+        }
+        else if (this.NextChar == '3')
+        {
+          if (this.NextNextChar == '2')
+          {
+            identifier += this.NextChar;
+            this.ReadChar();
+            identifier += this.NextChar;
+            this.ReadChar();
+          }
+        }
+        else if (this.NextChar == '6')
+        {
+          if (this.NextNextChar == '4')
+          {
+            identifier += this.NextChar;
+            this.ReadChar();
+            identifier += this.NextChar;
+            this.ReadChar();
+          }
+        }
+      }
       return identifier;
     }
 
@@ -326,7 +376,7 @@ namespace Compiler.Lib.Lexer
     {
       var number = this.CurrentChar.ToString();
 
-      // 次の文字が文字ならそれを読んで文字列に加える
+      // 次の文字が数字ならそれを読んで文字列に加える
       while (this.IsDigit(this.NextChar))
       {
         number += this.NextChar;

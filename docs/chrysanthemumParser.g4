@@ -28,7 +28,8 @@ embedded_type:
 	| FLOAT32
 	| FLOAT64
 	| NUMBER
-	| STRING;
+	| STRING
+	| BOOLEAN;
 
 object_name: identifier (DOT identifier)*?;
 

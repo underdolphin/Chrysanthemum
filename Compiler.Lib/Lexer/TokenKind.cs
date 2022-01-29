@@ -50,6 +50,7 @@ namespace Compiler.Lib.Lexer
     VOID,
     TRUE,
     FALSE,
+    BOOLEAN,
 
     // Punctuators
     OPEN_BRACE,

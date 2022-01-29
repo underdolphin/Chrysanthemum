@@ -20,11 +20,13 @@ namespace Compiler
   {
     public static void Main(string[] args)
     {
-      var input = @"const a = 5;";
+      var input = @"const:int16 a = 5;";
 
       var testTokens = new List<Tokens>();
       // const a = 5;
       testTokens.Add(new Tokens(TokenKind.CONST, "const"));
+      testTokens.Add(new Tokens(TokenKind.COLON, ":"));
+      testTokens.Add(new Tokens(TokenKind.INT16, "int16"));
       testTokens.Add(new Tokens(TokenKind.IDENTIFIER, "a"));
       testTokens.Add(new Tokens(TokenKind.ASSIGNMENT, "="));
       testTokens.Add(new Tokens(TokenKind.INTEGER_LITERAL, "5"));

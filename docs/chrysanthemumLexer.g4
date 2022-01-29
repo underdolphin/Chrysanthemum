@@ -28,6 +28,7 @@ PUBLIC : 'public';
 PRIVATE: 'private';
 
 // types
+BOOLEAN: 'boolean'; 
 INT8: 'int8';
 INT16: 'int16';
 INT32: 'int32';

@@ -45,6 +45,16 @@ namespace Compiler.Lib.Lexer
           {"when",TokenKind.WHEN},
           {"public",TokenKind.PUBLIC},
           {"private",TokenKind.PRIVATE},
+          {"int8",TokenKind.INT8},
+          {"int16",TokenKind.INT16},
+          {"int32",TokenKind.INT32},
+          {"int64",TokenKind.INT64},
+          {"float32",TokenKind.FLOAT32},
+          {"float64",TokenKind.FLOAT64},
+          {"number",TokenKind.NUMBER},
+          {"true",TokenKind.TRUE},
+          {"false",TokenKind.FALSE},
+          {"boolean",TokenKind.BOOLEAN},
       };
   }
 }
