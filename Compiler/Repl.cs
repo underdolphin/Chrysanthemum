@@ -1,4 +1,4 @@
-﻿// Copyright 2022 underdolphin
+// Copyright 2022 underdolphin
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,17 +11,32 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+using System;
+using Compiler.Lib.Lexer;
 
 namespace Compiler
 {
-  public class Program
+  public class Repl
   {
-    public static void Main(string[] args)
-    {
-      Console.WriteLine("Start repl.");
+    const string PROMPT = ">>";
 
-      var repl = new Repl();
-      repl.Excute();
+    public void Excute()
+    {
+      while (true)
+      {
+        Console.Write(PROMPT);
+
+        var input = Console.ReadLine();
+        if (string.IsNullOrEmpty(input)) return;
+
+        var lexer = new TokenLexer(input);
+        var token = lexer.NextToken();
+        while (token.TokenKind != TokenKind.EOF)
+        {
+          Console.WriteLine($"{{Type: {token.TokenKind.ToString()}, Literal: {token.Literal}}}");
+          token = lexer.NextToken();
+        }
+      }
     }
   }
 }
