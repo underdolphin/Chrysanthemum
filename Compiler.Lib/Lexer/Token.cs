@@ -14,9 +14,9 @@
 
 namespace Compiler.Lib.Lexer
 {
-  public class Tokens
+  public class Token
   {
-    public Tokens(TokenKind kind, string literal)
+    public Token(TokenKind kind, string literal)
     {
       this.TokenKind = kind;
       this.Literal = literal;
@@ -27,7 +27,7 @@ namespace Compiler.Lib.Lexer
 
     public static TokenKind LookupIdentifier(string identifier)
     {
-      if (Tokens.Keywords.ContainsKey(identifier))
+      if (Token.Keywords.ContainsKey(identifier))
       {
         return Keywords[identifier];
       }
